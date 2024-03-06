@@ -161,7 +161,6 @@ def end_draw_timer():
                 if post_time >= datetime.strptime(i.end_time, '%Y-%m-%d %H:%M'):
                     text = language_check(i.user_id)[1]['draw']
                     players = end_base.select_all(models.DrawPlayer, draw_id=str(i.id))
-                    result = end_base.get_one(models.Admin, draw_id=str(i.id))
                     if players == []:
                         winers = f"{i.text}\n*****\n{text['no_winers']}"
                         owin = f"{text['no_winers']}"
@@ -170,7 +169,7 @@ def end_draw_timer():
                         owin = f"{text['winers']}\n"
                         predicted_winners = []
                         for player in players:
-                            if player.user_id in str(result.winners_id).split():
+                            if player.user_id in str(i.winners_id).split():
                                 predicted_winners.append(player)
                                 players.remove(player)
                         pls = {p.user_id: p for p in players}
