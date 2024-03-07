@@ -1,6 +1,7 @@
 import telebot
-from base import DataBase
 from fsm import FSM
+from base import DataBase
+from models import Data
 import models
 from flask import Flask
 from flask_admin import Admin
@@ -20,8 +21,10 @@ from flask_admin.contrib.sqla import ModelView
 # admin = Admin(app)
 # admin.add_view(MyView(models.Draw, models.session, name='Розыгрыши'))
 
+bot_base = DataBase()
+BOT_TOKEN = bot_base.get_one(Data).bot_id
 
-bot = telebot.TeleBot('7131855484:AAFoKXk28dpYmT-CCzi_xUv3887cRIqcu4U')
+bot = telebot.TeleBot(BOT_TOKEN)
 fsm_base = DataBase()
 middleware_base = DataBase()
 main_base = DataBase()

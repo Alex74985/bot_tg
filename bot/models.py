@@ -9,7 +9,7 @@ from sqlalchemy.orm import scoped_session
 LINK = 'postgresql+psycopg2://postgres:12345@localhost/flask_db'
 
 engine = create_engine(LINK, echo=False)
-session = scoped_session(sessionmaker(bind=engine, autoflush=True))
+session = scoped_session(sessionmaker(bind=engine, autoflush=True, expire_on_commit=False))
 Base = declarative_base()
 
 
@@ -26,7 +26,7 @@ class Winners(Base):
 
 class Data(Base):
     __tablename__ = 'bot_id'
-    admin_id = Column(String, primary_key=True)
+    admin_id = Column(Integer, primary_key=True, autoincrement=True)
     bot_id = Column(String)
 
     def __init__(self, bot_id):

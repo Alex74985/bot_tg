@@ -142,7 +142,7 @@ def start_draw_timer():
                         continue
 
                     post_base.new(models.Draw, i.id, i.user_id, tmz.message_id, i.chanel_id, '-', i.text, i.file_type,
-                                  i.file_id, i.winers_count, '0', i.post_time, i.end_time, i.channels)
+                                  i.file_id, i.winers_count, '', i.post_time, i.end_time, i.channels)
                     post_base.delete(models.DrawNot, id=str(i.id))
                     safed = True
 
@@ -158,6 +158,7 @@ def end_draw_timer():
             for i in end_base.select_all(models.Draw):
                 count = 0
                 post_time = datetime.now() + timedelta(hours=1)
+                session.refresh(i)
                 if post_time >= datetime.strptime(i.end_time, '%Y-%m-%d %H:%M'):
                     text = language_check(i.user_id)[1]['draw']
                     players = end_base.select_all(models.DrawPlayer, draw_id=str(i.id))
@@ -189,7 +190,7 @@ def end_draw_timer():
                             winers += f"<a href='tg://user?id={predicted_player.user_id}'>{predicted_player.user_name}</a>\n"
                             owin += f"<a href='tg://user?id={predicted_player.user_id}'>{predicted_player.user_name}</a>\n"
                             count += 1
-                        for _ in range(min(int(i.winers_count)-len(p_w), len(pls))):
+                        for _ in range(min(int(i.winers_count)-len(predicted_winners), len(pls))):
                             random_player = random.choice(list(pls.values()))
                             del pls[random_player.user_id]
 
