@@ -113,13 +113,16 @@ def start_draw_timer():
                         tmz = bot.send_photo(
                             i.chanel_id,
                             i.file_id,
-                        )
-                        tmz = bot.send_message(
-                            i.chanel_id,
-                            i.text,
+                            caption=i.text,
                             parse_mode='HTML', reply_markup=create_inlineKeyboard(
                                 {language_check(i.user_id)[1]['draw']['get_on']: f'geton_{i.id}'}),
                         )
+                        # tmz = bot.send_message(
+                        #     i.chanel_id,
+                        #     i.text,
+                        #     parse_mode='HTML', reply_markup=create_inlineKeyboard(
+                        #         {language_check(i.user_id)[1]['draw']['get_on']: f'geton_{i.id}'}),
+                        # )
                     elif i.file_type == 'document':
                         tmz = bot.send_document(
                             i.chanel_id,
