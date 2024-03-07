@@ -213,8 +213,9 @@ def enter_text(message):
     back_button.row(text['back_in_menu'])
 
     try:
+        print(bot.get_chat_member(chat_id=message.text, user_id=message.from_user.id).status)
         if str(bot.get_chat_member(chat_id=message.text, user_id=message.from_user.id).status) not in status:
-            bot.send_message(text['not_admin'], reply_markup=back_button)
+            bot.send_message(message.chat.id, text['not_admin'], reply_markup=back_button)
             return ''
         tmp = bot.send_message(message.text, 'test')
         bot.delete_message(tmp.chat.id, tmp.message_id)

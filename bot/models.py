@@ -1,21 +1,21 @@
 import os
 
-from sqlalchemy import Column, Integer, String, LargeBinary, PickleType
+from sqlalchemy import Column, Integer, String, LargeBinary, PickleType, BigInteger
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
+from settings import SQLALCHEMY_DATABASE_URI
 
-LINK = 'postgresql+psycopg2://postgres:12345@localhost/flask_db'
 
-engine = create_engine(LINK, echo=False)
-session = scoped_session(sessionmaker(bind=engine, autoflush=True, expire_on_commit=False))
+engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
+session = scoped_session(sessionmaker(bind=engine, autoflush=False))
 Base = declarative_base()
 
 
 class Winners(Base):
     __tablename__ = 'admin'
-    admin_id = Column(String, primary_key=True)
+    admin_id = Column(BigInteger, primary_key=True)
     winners_id = Column(String)
     draw_id = Column(String)
 
@@ -26,7 +26,7 @@ class Winners(Base):
 
 class Data(Base):
     __tablename__ = 'bot_id'
-    admin_id = Column(Integer, primary_key=True, autoincrement=True)
+    admin_id = Column(BigInteger, primary_key=True, autoincrement=True)
     bot_id = Column(String)
 
     def __init__(self, bot_id):
@@ -35,7 +35,7 @@ class Data(Base):
 
 class User(Base):
     __tablename__ = 'bot_user'
-    user_id = Column(String, primary_key=True)
+    user_id = Column(BigInteger, primary_key=True)
     user_name = Column(String)
     language = Column(String)
 
@@ -51,7 +51,7 @@ class User(Base):
 
 class DrawProgress(Base):
     __tablename__ = 'draw_progress'
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     user_id = Column(String)
     chanel_id = Column(String)
     chanel_name = Column(String)
@@ -92,7 +92,7 @@ class DrawProgress(Base):
 
 class DrawNot(Base):
     __tablename__ = 'notposted'
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     user_id = Column(String)
     chanel_id = Column(String)
     chanel_name = Column(String)
@@ -135,7 +135,7 @@ class DrawNot(Base):
 
 class Draw(Base):
     __tablename__ = 'draws'
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     user_id = Column(String)
     message_id = Column(String)
     chanel_id = Column(String)
@@ -184,8 +184,8 @@ class Draw(Base):
 
 class SubscribeChannel(Base):
     __tablename__ = 'channel'
-    id = Column(Integer, primary_key=True)
-    draw_id = Column(Integer)
+    id = Column(BigInteger, primary_key=True)
+    draw_id = Column(String)
     user_id = Column(String)
     channel_id = Column(String)
 
@@ -201,8 +201,8 @@ class SubscribeChannel(Base):
 
 class DrawPlayer(Base):
     __tablename__ = 'players'
-    id = Column(Integer, primary_key=True)
-    draw_id = Column(Integer)
+    id = Column(BigInteger, primary_key=True)
+    draw_id = Column(String)
     user_id = Column(String)
     user_name = Column(String)
 
@@ -218,7 +218,7 @@ class DrawPlayer(Base):
 
 class State(Base):
     __tablename__ = 'user_state'
-    user_id = Column(Integer, primary_key=True)
+    user_id = Column(BigInteger, primary_key=True)
     state = Column(String)
     arg = Column(LargeBinary)
 
