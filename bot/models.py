@@ -41,7 +41,7 @@ class User(Base):
 
     def __init__(self, user_id, user_name, language):
         self.user_id = user_id
-        self.user_name = user_name,
+        self.user_name = user_name
         self.language = language
 
     def __repr__(self):
@@ -166,7 +166,7 @@ class Draw(Base):
         self.channels = channels
 
     def __repr__(self):
-        return "<DrawProgress(id='%s', user_id='%s', message_id='%s' chanel_id='%s', chanel_name='%s', text='%s', file_type='%s', file_id='%s', winers_count='%s', predicted_winners ='%s', post_time='%s', end_time='%s')>" % (
+        return "<DrawProgress(id='%s', user_id='%s', message_id='%s', chanel_id='%s', chanel_name='%s', text='%s', file_type='%s', file_id='%s', winers_count='%s', predicted_winners ='%s', post_time='%s', end_time='%s')>" % (
             self.id,
             self.user_id,
             self.message_id,

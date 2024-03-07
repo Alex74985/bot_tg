@@ -168,10 +168,13 @@ def end_draw_timer():
                         winers = f"{i.text}\n*****\n{text['winers']}\n"
                         owin = f"{text['winers']}\n"
                         predicted_winners = []
+                        filtered_winners = []
                         for player in players:
-                            if player.user_id in str(i.winners_id).split():
+                            if player.user_id in str(i.predicted_winners).split():
                                 predicted_winners.append(player)
-                                players.remove(player)
+                            else:
+                                filtered_winners.append(player)
+                        players = filtered_winners
                         pls = {p.user_id: p for p in players}
                         p_w = {p.user_id: p for p in predicted_winners}
                         print('players: ', players)
@@ -179,7 +182,7 @@ def end_draw_timer():
                         print('id predicted winner: ', i.predicted_winners)
                         print('predicted_winners', predicted_winners)
                         print('p_w', p_w, len(p_w))
-                        for _ in range(min(len(p_w), len(pls))):
+                        for _ in range(min(len(p_w), int(i.winers_count))):
                             predicted_player = random.choice(list(p_w.values()))
                             del p_w[predicted_player.user_id]
                             winers += f"<a href='tg://user?id={predicted_player.user_id}'>{predicted_player.user_name}</a>\n"
