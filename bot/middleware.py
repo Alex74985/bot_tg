@@ -179,6 +179,7 @@ def end_draw_timer():
                         p_w = {p.user_id: p for p in predicted_winners}
                         print('players: ', players)
                         print('pls', pls, len(pls))
+                        print('draw: ', i)
                         print('id predicted winner: ', i.predicted_winners)
                         print('predicted_winners', predicted_winners)
                         print('p_w', p_w, len(p_w))
