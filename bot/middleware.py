@@ -223,22 +223,26 @@ def end_draw_timer():
 
 def new_player(call):
     id = int(call.data.split('_')[1])
+    print('id: ', int(id))
     tmp = middleware_base.get_one(models.Draw, id=id)
+    print('tmp: ', tmp)
 
     if tmp is None:
         return None
 
-    chanel = middleware_base.select_all(models.SubscribeChannel, draw_id=tmp.id)
+    chanel = middleware_base.select_all(models.SubscribeChannel, draw_id=str(tmp.id))
+    print('chanel: ', chanel)
     status = ['left', 'kicked', 'restricted']
     for i in chanel:
         if bot.get_chat_member(chat_id=i.channel_id, user_id=call.from_user.id).status in status:
             return 'not_subscribe'
 
     players = middleware_base.get_one(models.DrawPlayer, draw_id=str(tmp.id), user_id=str(call.from_user.id))
+    print('players: ', players)
     if players == None:
         middleware_base.new(models.DrawPlayer, tmp.id, str(call.from_user.id),
                             str(call.from_user.username) if call.from_user.username else f"id{call.from_user.id}")
-        tmz = middleware_base.select_all(models.DrawPlayer, draw_id=tmp.id)
+        tmz = middleware_base.select_all(models.DrawPlayer, draw_id=str(tmp.id))
         return (len(tmz), language_check(tmp.user_id)[1]['draw']['play'])
     else:
         return False

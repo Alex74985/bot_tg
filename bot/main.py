@@ -38,6 +38,7 @@ def get_on_draw(call):
     try:
         text = language_check(call.message.chat.id)[1]['draw']
         tmp = middleware.new_player(call)
+        print('tmp return: ', tmp)
 
         if tmp is None:
             bot.answer_callback_query(
@@ -58,7 +59,8 @@ def get_on_draw(call):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True,  text=text['got_on'])
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id, inline_message_id=call.inline_message_id, reply_markup=create_inlineKeyboard({f"({tmp[0]}) {tmp[1]}":call.data}))
 
-    except:
+    except Exception as exc:
+        print(exc)
         bot.answer_callback_query(
             callback_query_id=call.id,
             show_alert=True,

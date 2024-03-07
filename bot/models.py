@@ -5,23 +5,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
-from settings import SQLALCHEMY_DATABASE_URI
 
 
-engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
-session = scoped_session(sessionmaker(bind=engine, autoflush=False))
+LINK = 'postgresql+psycopg2://postgres:12345@localhost/flask_db'
+
+engine = create_engine(LINK, echo=False)
+session = scoped_session(sessionmaker(bind=engine, autoflush=True, expire_on_commit=False))
 Base = declarative_base()
-
-
-class Winners(Base):
-    __tablename__ = 'admin'
-    admin_id = Column(BigInteger, primary_key=True)
-    winners_id = Column(String)
-    draw_id = Column(String)
-
-    def __init__(self, winners_id, draw_id):
-        self.winners_id = winners_id
-        self.draw_id = draw_id
 
 
 class Data(Base):
