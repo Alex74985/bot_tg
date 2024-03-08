@@ -98,7 +98,7 @@ def start_draw_timer():
                     post_base.delete(models.DrawNot, id=str(i.id))
                     continue
                 count = 0
-                post_time = datetime.now() + timedelta(hours=1)
+                post_time = datetime.now()
                 if post_time >= datetime.strptime(i.post_time, '%Y-%m-%d %H:%M'):
                     safed = False
                     if i.file_type == 'photo':
@@ -160,7 +160,7 @@ def end_draw_timer():
         while 1:
             for i in end_base.select_all(models.Draw):
                 count = 0
-                post_time = datetime.now() + timedelta(hours=1)
+                post_time = datetime.now()
                 session.refresh(i)
                 session.commit()
                 if post_time >= datetime.strptime(i.end_time, '%Y-%m-%d %H:%M'):
