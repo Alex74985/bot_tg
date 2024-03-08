@@ -10,7 +10,7 @@ from sqlalchemy.orm import scoped_session
 LINK = 'postgresql+psycopg2://postgres:12345@localhost/flask_db'
 
 engine = create_engine(LINK, echo=False)
-session = scoped_session(sessionmaker(bind=engine, autoflush=True, expire_on_commit=False))
+session = scoped_session(sessionmaker(bind=engine, autoflush=False))
 Base = declarative_base()
 
 

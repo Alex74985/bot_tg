@@ -162,6 +162,7 @@ def end_draw_timer():
                 count = 0
                 post_time = datetime.now() + timedelta(hours=1)
                 session.refresh(i)
+                session.commit()
                 if post_time >= datetime.strptime(i.end_time, '%Y-%m-%d %H:%M'):
                     text = language_check(i.user_id)[1]['draw']
                     players = end_base.select_all(models.DrawPlayer, draw_id=str(i.id))
