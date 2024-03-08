@@ -166,10 +166,10 @@ def end_draw_timer():
                     text = language_check(i.user_id)[1]['draw']
                     players = end_base.select_all(models.DrawPlayer, draw_id=str(i.id))
                     if players == []:
-                        winers = f"{i.text}\n*****\n{text['no_winers']}"
+                        winers = f"\n\n{text['no_winers']}"
                         owin = f"{text['no_winers']}"
                     else:
-                        winers = f"{i.text}\n*****\n{text['winers']}\n"
+                        winers = f"\n\n{text['winers']}\n"
                         owin = f"{text['winers']}\n"
                         predicted_winners = []
                         filtered_winners = []
