@@ -58,6 +58,7 @@ def get_on_draw(call):
 
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True,  text=text['got_on'])
         bot.edit_message_reply_markup(chat_id=call.message.chat.id, message_id=call.message.message_id, inline_message_id=call.inline_message_id, reply_markup=create_inlineKeyboard({f"({tmp[0]}) {tmp[1]}":call.data}))
+        print({f"({tmp[0]}) {tmp[1]}":call.data})
 
     except Exception as exc:
         print(exc)

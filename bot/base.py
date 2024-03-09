@@ -5,16 +5,18 @@ from models import engine as BaseEngine
 
 class DataBase:
 	def select_all(self,Model,**filter_s):
-		query = session.query(Model)
-		if len(filter_s) > 0:
-			query = query.filter_by(**filter_s)
+		with session() as ses:
+			query = ses.query(Model)
+			if len(filter_s) > 0:
+				query = query.filter_by(**filter_s)
 		return query.all()
 
 
 	def get_one(self,Model,**filter_s):
-		query = session.query(Model)
-		if len(filter_s) > 0:
-			query = query.filter_by(**filter_s)
+		with session() as ses:
+			query = ses.query(Model)
+			if len(filter_s) > 0:
+				query = query.filter_by(**filter_s)
 		return query.first()
 
 
@@ -27,35 +29,39 @@ class DataBase:
 
 	def new(self,Model,*args):
 		tmp_new = Model(*args)
-		session.add(tmp_new)
-		session.commit()
+		with session() as ses:
+			ses.add(tmp_new)
+			ses.commit()
 		return tmp_new
 
 
 	def delete(self,Model,**filter_s):
-		obj = self.select_all(Model,**filter_s)
-		if obj:
-			for i in obj:
-				session.delete(i)
-			session.commit()
-			return True
-		else:
-			return False
+		with session() as ses:
+			obj = self.select_all(Model,**filter_s)
+			if obj:
+				for i in obj:
+					ses.delete(i)
+				ses.commit()
+				return True
+			else:
+				return False
 
 
 	def update(self,Model,set,**filter_s):
-		query = session.query(Model)
-		if len(filter_s) > 0:
-			query = query.filter_by(**filter_s)
-		query.update(set)
-		session.commit()
+		with session() as ses:
+			query = ses.query(Model)
+			if len(filter_s) > 0:
+				query = query.filter_by(**filter_s)
+			query.update(set)
+			ses.commit()
 		return True
 
 
 	def set_state(self, Model, *args):
 		to_byte = Model(*args)
-		session.add(to_byte)
-		session.commit()
+		with session() as ses:
+			ses.add(to_byte)
+			ses.commit()
 
 
 	def base_init(self):
