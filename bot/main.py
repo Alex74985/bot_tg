@@ -539,9 +539,10 @@ def add_check_channel(message):
     #     bot.send_message(message.chat.id, text['not_in_chanel'])
     #     return ''
     tmp = base.get_one(models.DrawProgress, user_id=str(message.chat.id))
+    dr_id = tmp.id
     base.update(models.DrawProgress, {'channels': (tmp.channels or []) + [message.text]}, user_id=str(message.chat.id))
-    base.new(models.SubscribeChannel, tmp.id, str(message.chat.id), message.text)
-    bot.send_message(message.chat.id, '✅ Канал добавлен успешно. Если больше не нужно добавлять каналы, нажмите кнопку "Готово". В противном случае, отправьте еще один канал.', reply_markup=keyboard.done())
+    base.new(models.SubscribeChannel, dr_id, str(message.chat.id), message.text)
+    bot.send_message(message.chat.id, '✅ Канал добавлен успешно. Если больше не нужно добавлять каналы, нажмите кнопку "Опубликовать". В противном случае, добавьте еще один канал.', reply_markup=keyboard.done())
     middleware.send_draw_info(message.chat.id)
     print(base.select_all(models.SubscribeChannel))
 
