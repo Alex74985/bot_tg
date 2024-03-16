@@ -238,6 +238,9 @@ def enter_photo(message):
     back_button = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     back_button.row(text['back_in_menu'])
     tmp = fsm.get_state(message.chat.id)[1]
+    if len(message.text) > 1000:
+        bot.send_message(message.chat.id, "Длина текста не должна превышать 1000 символов!")
+        return ''
     fsm.set_state(message.chat.id, "enter_photo", draw_text=message.text, chanel_id=tmp['chanel_id']) # , chanel_name=tmp['chanel_name']
     bot.send_message(message.chat.id, text['file'], reply_markup=back_button)
     # fsm.set_state(message.chat.id, "writting_text", chanel_id=message.text)
