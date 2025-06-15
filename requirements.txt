@@ -21,7 +21,7 @@ MarkupSafe==2.1.5
 psycopg2==2.9.9
 pyTelegramBotAPI==4.7.0
 pytz==2024.1
-requests==2.31.0
+requests==2.32.4
 SQLAlchemy==2.0.28
 typing-extensions==4.10.0
 urllib3==2.2.1
